@@ -5,10 +5,8 @@ extern crate opengl_graphics;
 extern crate piston_window;
 extern crate rand;
 
-use piston::window::WindowSettings;
-use piston::event_loop::*;
-use piston::input::*;
 use piston_window::*;
+use piston::{event_loop::*, input::*, window::WindowSettings};
 use opengl_graphics::{ OpenGL };
 
 mod app;
