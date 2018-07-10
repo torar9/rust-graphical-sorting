@@ -22,7 +22,7 @@ fn main()
 {
     let opengl = OpenGL::V4_3;
 
-    let mut window: PistonWindow = WindowSettings::new("Piston rust", [800, 600])
+    let mut window: PistonWindow = WindowSettings::new("Sorting", [800, 600])
         .exit_on_esc(true)
         .opengl(opengl)
         .vsync(true)
