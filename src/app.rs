@@ -1,7 +1,6 @@
 use piston::input::*;
 use piston_window::*;
-use std::time::Duration;
-use std::thread;
+use std::{time::Duration, thread};
 use opengl_graphics::{ GlGraphics, OpenGL };
 use ::rand::prelude::*;
 
