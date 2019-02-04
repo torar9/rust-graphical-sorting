@@ -19,7 +19,7 @@ pub use app::*;
 
 fn main()
 {
-    let opengl = OpenGL::V4_3;
+    let opengl = OpenGL::V4_5;
 
     let mut window: PistonWindow = WindowSettings::new("Sorting", [800, 600])
         .exit_on_esc(true)

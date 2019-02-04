@@ -7,7 +7,6 @@ use ::rand::prelude::*;
 use color::Color;
 use object::Object;
 use bubblesort::*;
-use point::*;
 
 
 pub struct App
@@ -19,10 +18,7 @@ pub struct App
     is_rendered: bool,
     selected: usize,
     speed: u64,
-    pos: Point<usize>,
     sort: BubbleSort,
-    i: usize,
-    j: usize,
 }
 
 impl App
@@ -36,9 +32,6 @@ impl App
             list: Vec::with_capacity(amount),
             push: false,
             is_rendered: false,
-            pos: Point::new(0, 0),
-            i: 0,
-            j: 0,
             sort: BubbleSort::new(),
             speed: 50,
             selected: 0,
