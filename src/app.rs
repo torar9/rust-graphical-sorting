@@ -4,9 +4,10 @@ use std::{time::Duration, thread};
 use opengl_graphics::{ GlGraphics, OpenGL };
 use ::rand::prelude::*;
 
-
 use color::Color;
 use object::Object;
+use bubblesort::*;
+use point::*;
 
 
 pub struct App
@@ -18,6 +19,8 @@ pub struct App
     is_rendered: bool,
     selected: usize,
     speed: u64,
+    pos: Point<usize>,
+    sort: BubbleSort,
     i: usize,
     j: usize,
 }
@@ -33,8 +36,10 @@ impl App
             list: Vec::with_capacity(amount),
             push: false,
             is_rendered: false,
+            pos: Point::new(0, 0),
             i: 0,
             j: 0,
+            sort: BubbleSort::new(),
             speed: 50,
             selected: 0,
         };
@@ -81,28 +86,11 @@ impl App
     {
         self.is_rendered = false;
 
-        for i in self.i..self.amount -1
+        match self.sort.sort(&mut self.list)
         {
-            for j in self.j..self.amount - i - 1
-            {
-                if self.list[j + 1].value < self.list[j].value
-                {
-                    self.list.swap(j + 1, j);
-                }
-                self.list[j + 1].is_active = true;
-
-                self.j += 1;
-                if self.j >= self.amount - i - 1
-                {
-                    self.j = 0;
-                    self.i += 1;
-                    return;
-                }
-                return;
-            }
-            self.i += 1;
+            Some(()) => { self.push = false; },
+            None => {}
         }
-        self.push = false;
     }
 
     pub fn update(&mut self, upd: &UpdateArgs)
@@ -163,7 +151,7 @@ impl App
             Button::Keyboard(Key::Up) =>
             {
                 println!("pressed: Up, current speed: {}", self.speed);//Increase speed by decreasing thread sleep time
-                if(self.speed != 0)
+                if self.speed != 0
                 {
                     self.speed -= 5;
                 }

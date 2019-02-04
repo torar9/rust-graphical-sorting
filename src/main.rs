@@ -13,6 +13,7 @@ mod app;
 mod color;
 mod point;
 mod object;
+mod bubblesort;
 
 pub use app::*;
 
