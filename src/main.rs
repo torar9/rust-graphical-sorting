@@ -23,7 +23,7 @@ fn main()
     let mut window: PistonWindow = WindowSettings::new("Sorting", [800, 600])
         .exit_on_esc(true)
         .opengl(opengl)
-        .vsync(true)
+        .vsync(false)
         .build()
         .unwrap();
 

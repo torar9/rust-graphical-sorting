@@ -17,6 +17,7 @@ pub struct App
     push: bool,
     is_rendered: bool,
     selected: usize,
+    speed: u64,
     i: usize,
     j: usize,
 }
@@ -34,6 +35,7 @@ impl App
             is_rendered: false,
             i: 0,
             j: 0,
+            speed: 50,
             selected: 0,
         };
 
@@ -107,7 +109,7 @@ impl App
     {
         if self.push && self.is_rendered
         {
-            thread::sleep(Duration::from_millis(50));
+            thread::sleep(Duration::from_millis(self.speed));
             self.bubble_sort();
         }
     }
@@ -150,8 +152,21 @@ impl App
             }
             Button::Keyboard(Key::Q) =>
             {
-                println!("pressed: Q");
-                self.push = true;
+                println!("pressed: Q");//Start/Stop button
+                self.push = !self.push;
+            }
+            Button::Keyboard(Key::Down) =>
+            {
+                println!("pressed: Down, current speed: {}", self.speed);//Decrease speed by increasing thread sleep time
+                self.speed += 5;
+            }
+            Button::Keyboard(Key::Up) =>
+            {
+                println!("pressed: Up, current speed: {}", self.speed);//Increase speed by decreasing thread sleep time
+                if(self.speed != 0)
+                {
+                    self.speed -= 5;
+                }
             }
             _ => {}
         }
