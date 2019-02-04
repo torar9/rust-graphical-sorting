@@ -36,7 +36,6 @@ impl BubbleSort
             }
             self.i += 1;
         }
-        println!("Before none");
         return Some(());
     }
 }
