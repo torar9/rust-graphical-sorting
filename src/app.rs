@@ -12,12 +12,12 @@ use bubblesort::*;
 pub struct App
 {
     gl: GlGraphics,
-    amount: usize,
-    list: Vec<Object<u32>>,
-    push: bool,
-    is_rendered: bool,
+    amount: usize,//Amount of elements in sort array
+    list: Vec<Object<u32>>,//Vector that contains elements to sort
+    push: bool,//Is used to Start/Stop sorting
+    is_rendered: bool,//Prevents multiple execution of do_cycle in case of thread race
     selected: usize,
-    speed: u64,
+    speed: u64,//Amount of time to sleep thread in ms, faster -> decrease; value slower -> increase value
     sort: BubbleSort,
 }
 
@@ -30,10 +30,10 @@ impl App
             gl: GlGraphics::new(ogl),
             amount: amount,
             list: Vec::with_capacity(amount),
-            push: false,
+            push: false,//Wait for user input to start sorting
             is_rendered: false,
             sort: BubbleSort::new(),
-            speed: 50,
+            speed: 50,//Sleep thread for 50 ms by default
             selected: 0,
         };
 
@@ -56,6 +56,8 @@ impl App
         let amount = self.amount;
         for (i, e) in self.list.iter_mut().enumerate()
         {
+            /*Each element in list gets its own object with its width
+                and height based on screen size and its value*/
             let w_per_item = (args.width as f64) / amount as f64;
             let x = w_per_item as f64 * i as f64;
             let height = e.value as f64;
@@ -70,7 +72,7 @@ impl App
             }
 
             e.draw(&mut self.gl, args);
-            e.reset_options();
+            e.reset_options();//Resets object's properties such as is_active to prevent multiple is_active elements
         }
         self.is_rendered = true;
     }
@@ -88,7 +90,7 @@ impl App
 
     pub fn update(&mut self, upd: &UpdateArgs)
     {
-        if self.push && self.is_rendered
+        if self.push && self.is_rendered//Prevents multiple execution of do_cycle in case of thread race
         {
             thread::sleep(Duration::from_millis(self.speed));
             self.bubble_sort();
