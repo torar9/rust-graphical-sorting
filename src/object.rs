@@ -16,7 +16,7 @@ pub struct Object<T>
     pub is_active: bool,
 }
 
-impl <T> Object<T>
+impl<T> Object<T>
 {
     pub fn new(col: Color, val: T) -> Object<T>
     {
@@ -35,7 +35,7 @@ impl <T> Object<T>
     pub fn draw(&mut self, gl: &mut GlGraphics, args: &RenderArgs)
     {
         let rect = [self.pos.x, self.pos.y, self.width, self.height];
-        
+
         gl.draw(args.viewport(), |c, gl|
             {
                 if self.is_selected

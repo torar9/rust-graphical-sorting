@@ -13,7 +13,7 @@ impl BubbleSort
         BubbleSort{i: 0, j: 0}
     }
 
-    pub fn sort(&mut self, list: &mut Vec<Object<u32>>) -> Option<()>
+    pub fn do_cycle(&mut self, list: &mut Vec<Object<u32>>) -> Option<()>
     {
         for i in self.i..list.len() -1
         {
@@ -30,7 +30,6 @@ impl BubbleSort
                 {
                     self.j = 0;
                     self.i += 1;
-                    return None;
                 }
                 return None;
             }

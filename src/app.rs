@@ -79,7 +79,7 @@ impl App
     {
         self.is_rendered = false;
 
-        match self.sort.sort(&mut self.list)
+        match self.sort.do_cycle(&mut self.list)
         {
             Some(()) => { self.push = false; },
             None => {}
