@@ -2,8 +2,8 @@ use object::*;
 
 pub struct BubbleSort
 {
-    pub i: usize,
-    pub j: usize,
+    i: usize,
+    j: usize,
 }
 
 impl BubbleSort
