@@ -1,6 +1,8 @@
 use piston::input::*;
 use piston_window::*;
 use std::{time::Duration, thread};
+use std::rc::Rc;
+use std::cell::RefCell;
 use opengl_graphics::{ GlGraphics, OpenGL };
 use ::rand::prelude::*;
 
@@ -11,7 +13,7 @@ use bubblesort::*;
 
 pub struct App
 {
-    gl: GlGraphics,
+    gl: Rc<RefCell<GlGraphics>>,
     amount: usize,//Amount of elements in sort array
     list: Vec<Object<u32>>,//Vector that contains elements to sort
     push: bool,//Is used to Start/Stop sorting
@@ -27,7 +29,7 @@ impl App
     {
         let mut it = App
         {
-            gl: GlGraphics::new(ogl),
+            gl: Rc::new(RefCell::new(GlGraphics::new(ogl))),
             amount: amount,
             list: Vec::with_capacity(amount),
             push: false,//Wait for user input to start sorting
@@ -49,8 +51,8 @@ impl App
 
     pub fn render(&mut self, args: &RenderArgs)
     {
-        self.gl.clear_stencil(0);
-        self.gl.clear_color([0.0, 0.0, 0.0, 1.0]);
+        self.gl.borrow_mut().clear_stencil(0);
+        self.gl.borrow_mut().clear_color([0.0, 0.0, 0.0, 1.0]);
 
         let selected = self.selected;
         let amount = self.amount;
@@ -71,7 +73,7 @@ impl App
                 e.is_selected = true;
             }
 
-            e.draw(&mut self.gl, args);
+            e.draw(&mut self.gl.borrow_mut(), args);
             e.reset_options();//Resets object's properties such as is_active to prevent multiple is_active elements
         }
         self.is_rendered = true;
@@ -90,7 +92,7 @@ impl App
 
     pub fn update(&mut self, upd: &UpdateArgs)
     {
-        if self.push && self.is_rendered//Prevents multiple execution of do_cycle in case of thread race
+        if self.push && self.is_rendered
         {
             thread::sleep(Duration::from_millis(self.speed));
             self.bubble_sort();

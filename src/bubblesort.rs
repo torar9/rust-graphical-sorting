@@ -26,14 +26,14 @@ impl BubbleSort
                 list[self.j + 1].is_active = true;
 
                 self.j += 1;
-                if self.j >= list.len() - i - 1
+                if self.j >= list.len() - i - 1 //If is at the end of inner cycle
                 {
                     self.j = 0;
                     self.i += 1;
                 }
                 return None;
             }
-            self.i += 1;
+            //self.i += 1;
         }
         return Some(());
     }
