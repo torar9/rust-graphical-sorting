@@ -4,6 +4,7 @@ extern crate glutin_window;
 extern crate opengl_graphics;
 extern crate piston_window;
 extern crate rand;
+extern crate crossbeam;
 
 use piston_window::*;
 use piston::{event_loop::*, input::*, window::WindowSettings};
