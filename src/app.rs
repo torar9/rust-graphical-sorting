@@ -59,9 +59,9 @@ impl App
             /*Each element in list gets its own object with its width
                 and height based on screen size and its value*/
             let w_per_item = (args.width as f64) / amount as f64;
-            let x = w_per_item as f64 * i as f64;
+            let x = w_per_item as f64 * i as f64;//x position of element
             let height = e.value as f64;
-            let y = args.height as f64 - height;
+            let y = args.height as f64 - height;//y position of element
 
             e.set_xy(x, y);
             e.width = w_per_item;
